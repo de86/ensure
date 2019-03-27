@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It should match the Hello snapshot: Hello 1`] = `
+<h1>
+  Yello from 
+  Test
+   and 
+  test
+  !
+</h1>
+`;
