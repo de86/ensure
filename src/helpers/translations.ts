@@ -13,7 +13,6 @@ export function translate(key: string): string {
     const stack: Record<string, object>[] = [translations];
 
     for (let i = 0; i < keys.length; i++) {
-        // undefined after first fo round
         const result = stack[i][keys[i]];
 
         if (!result) {

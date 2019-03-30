@@ -1,13 +1,10 @@
-import {SET_CURRENT_PAGE} from './actions';
-
-// Move out of here
-export interface IAppState {
-    currentPage: string
-}
+import { SET_CURRENT_PAGE, SET_QUESTION_ANSWER } from './actions';
+import { IAppState } from '../shared/types';
 
 // decide page number or names. maybe create enum
 const initialState: IAppState = {
-    currentPage: 'terms'
+    currentPage: 'terms',
+    questionAnswers: {}
 }
 
 export default function rootReducer (state: IAppState = initialState, action: any) {
@@ -17,6 +14,15 @@ export default function rootReducer (state: IAppState = initialState, action: an
             return {
                 ...state,
                 currentPage: action.payload
+            }
+
+        case SET_QUESTION_ANSWER:
+            return {
+                ...state,
+                questionAnswers: {
+                    ...state.questionAnswers,
+                    [action.payload.id]: action.payload.answer
+                }
             }
 
         default:

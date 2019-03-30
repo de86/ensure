@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { IAppState } from '../../store/reducers';
-import { setCurrentPage } from '../../store/actions';
+import { IAppState } from '../../shared/types';
+
+import api from '../../services/api';
+import { setCurrentPage, getLang } from '../../store/actions';
 
 import Terms from '../pageContent/Terms';
 import AboutYou from '../pageContent/AboutYou';
@@ -14,16 +16,29 @@ interface IPropsFromState {
 }
 
 interface IPropsWithDispatch {
-    setCurentPage: Function
+    dispatchSetCurentPage: Function
 }
 
 interface IMainLayoutProps extends IPropsFromState, IPropsWithDispatch {}
 
-class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, {}> {
-    
-    // Check how to bind automatically
+interface IMainLayoutState {
+    isLoading: boolean
+}
+
+
+class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState> {
+
+    state: IMainLayoutState = {
+        isLoading: true
+    }
+
     onClickNext = (e: React.MouseEvent): void => {
-        this.props.setCurentPage('test');
+        this.props.dispatchSetCurentPage('test');
+    }
+
+    componentDidMount (): void {
+        api.getLang('en')
+            .then(lang => console.log(lang));
     }
 
     render (): React.ReactNode {
@@ -33,6 +48,7 @@ class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, {}> {
             <div>
                 <h1>Ensuro</h1>
                 <h2>{currentPage}</h2>
+
                 <div>
                     <Link to="/">Terms</Link>
                     <Link to="/about-you">About You</Link>
@@ -47,6 +63,7 @@ class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, {}> {
                     <div>prev</div>
                     <div onClick={this.onClickNext}>next</div>
                 </div>
+
                 <footer>
                     <h3>Copyright Ensuro</h3>
                 </footer>
@@ -55,12 +72,13 @@ class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, {}> {
     }
 }
 
+
 const mapStateToProps = (state: IAppState) => ({
     currentPage: state.currentPage
 })
 
 const mapDispatchToProps = (dispatch: Function) => ({
-    setCurentPage: (pageName:string) => dispatch(setCurrentPage(pageName))
+    dispatchSetCurentPage: (pageName:string) => dispatch(setCurrentPage(pageName))
 })
 
 export default connect(
