@@ -3,7 +3,7 @@
   "author": "Dave Elliott",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "webpack-dev-server --open",
     "test": "jest",
