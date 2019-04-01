@@ -1,5 +1,6 @@
 import {createStore} from 'redux';
 import rootReducer from './reducers';
+import { IAppState } from '../shared/types';
 
 const store = createStore(
     rootReducer,

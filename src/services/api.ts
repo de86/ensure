@@ -11,7 +11,8 @@ function getLang (locale: string): AxiosPromise {
         params: {
             locale
         }
-    });
+    })
+        .then((res) => res.data[0]);
 }
 
 export default {

@@ -1,6 +1,8 @@
 export interface IAppState {
     currentPage: string;
     questionAnswers: Record<string, string>;
+    lang: any; // Todo: type properly
+    pageData: any; // Todo: type properly
 }
 
 export interface IQuestionTranslations {

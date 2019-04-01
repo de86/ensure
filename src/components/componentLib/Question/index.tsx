@@ -2,38 +2,58 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { setQuestionAnswer } from '../../../store/actions';
-import { IQuestion, IQuestionAnswer } from '../../../shared/types';
+import { IQuestion, IQuestionAnswer } from  '../../../shared/types';
+
+import { translate } from '../../../helpers/translations';
 
 import Checkbox from '../Checkbox';
+
 
 export enum QuestionTypes {
     Checkbox
 }
 
-interface IQuestionProps {
+interface IPropsWithDispatch {
+    dispatchSetQuestionAnswer: Function;
+}
+
+interface IQuestionProps extends IPropsWithDispatch {
     question: IQuestion;
     questionType: QuestionTypes;
-    dispatchSetQuestionAnswer: Function;
 }
 
 const questions = {
     [QuestionTypes.Checkbox]: Checkbox
 }
 
+
 class UnconnectedQuestion extends React.PureComponent<IQuestionProps, {}> {
+    inputRef = React.createRef<HTMLInputElement>();
+
+    dispatchSetQuestionAnswer = (e: React.ChangeEvent<HTMLInputElement>): void => this.props.dispatchSetQuestionAnswer({
+        id: this.props.question.id,
+        answer: this.inputRef.current.checked
+    });
+
+    questionComponent = React.createElement(questions[this.props.questionType], {
+        id: this.props.question.id,
+        name: this.props.question.name,
+        labelText: translate(this.props.question.translations.text),
+        inputRef: this.inputRef,
+        dispatchSetQuestionAnswer: this.dispatchSetQuestionAnswer
+    });
+
     render (): React.ReactNode {
-        const {question, questionType, dispatchSetQuestionAnswer} = this.props;
-
-        return React.createElement(questions[questionType], {
-            question: question, 
-            dispatchSetQuestionAnswer: dispatchSetQuestionAnswer
-        })
+        return this.questionComponent;
     }
-
 }
 
-const matchDispatchToProps = (dispatch: Function) => ({
-    dispatchSetQuestionAnswer: (questionAnswer: IQuestionAnswer) => dispatch(setQuestionAnswer(questionAnswer))
-})
 
-export default connect(null, matchDispatchToProps)(UnconnectedQuestion)
+const mapDispatchToProps = (dispatch: Function) => ({
+    dispatchSetQuestionAnswer: (questionAnswer: IQuestionAnswer) => dispatch(setQuestionAnswer(questionAnswer))
+});
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(UnconnectedQuestion);
