@@ -16,5 +16,5 @@ that is easy to modify through both json files and creating react components.
 ### To run:
 
 - Clone repo
-- From data/mockApi run 'json-server --watch db.json --routes routes.json'
-- From the root directory run 'yarn dev'
+- From root run 'yarn serve'
+- From root directory run 'yarn dev'
