@@ -1,11 +1,36 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
-import {translate} from '../../../helpers/translations';
 import questions from '../../../../data/questionSets/car';
+import { IAppState, IPage } from '../../../shared/types';
+
+import { translate } from '../../../helpers/translations';
+import { setCurrentPage } from '../../../store/actions';
+
 
 import Question, { QuestionTypes } from '../../componentLib/Question';
 
-export default class Terms extends React.PureComponent<{}, {}> {
+interface IPropsWithDispatch {
+    dispatchSetCurrentPage: Function
+}
+
+interface IPropsFromState {
+    currentPage: IPage,
+    pageData: Record<string, IPage>
+}
+
+interface IOwnProps {
+    setNavigationUrls: Function
+};
+
+interface ITermsProps extends IPropsFromState, IPropsWithDispatch, IOwnProps {}
+
+class Terms extends React.PureComponent<ITermsProps, {}> {
+
+    componentDidMount (): void {
+        this.props.dispatchSetCurrentPage(this.props.pageData.terms)
+    }
+
     render (): React.ReactNode {
         return (
             <React.Fragment>
@@ -19,3 +44,18 @@ export default class Terms extends React.PureComponent<{}, {}> {
         );
     }
 }
+
+
+const mapDispatchToProps = (dispatch: Function) => ({
+    dispatchSetCurrentPage: (currentPageData: IPage) => dispatch(setCurrentPage(currentPageData))
+});
+
+const mapStateToProps = (state: IAppState) => ({
+    pageData: state.pageData,
+    currentPage: state.currentPage
+});
+
+export default connect<IPropsFromState, IPropsWithDispatch, IOwnProps, IAppState>(
+    mapStateToProps,
+    mapDispatchToProps
+)(Terms);

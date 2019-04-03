@@ -4,21 +4,20 @@ import { connect } from 'react-redux';
 
 import pageData from '../../../data/pages/car';
 
-import { IAppState } from '../../shared/types';
+import { IAppState, IPage } from '../../shared/types';
 
 import api from '../../services/api';
-import { setCurrentPage, setLang, setPageData } from '../../store/actions';
+import { setLang, setPageData } from '../../store/actions';
 
 import Terms from '../pageContent/Terms';
 import AboutYou from '../pageContent/AboutYou';
 import YourVehicle from '../pageContent/YourVehicle';
 
 interface IPropsFromState {
-    currentPage: string
+    currentPage: IPage
 }
 
 interface IPropsWithDispatch {
-    dispatchSetCurentPage: Function
     dispatchSetLang: Function
     dispatchSetPageData: Function
 }
@@ -30,17 +29,12 @@ interface IMainLayoutState {
 }
 
 
-class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState> {
+class MainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState> {
 
     state: IMainLayoutState = {
         isLoading: true
     }
 
-    onClickNext = (e: React.MouseEvent): void => {
-        this.props.dispatchSetCurentPage('test');
-    }
-
-    // Should probably move this to App.tsx
     fetchInitialAppData = () => {
         this.setState({isLoading: true});
 
@@ -68,7 +62,7 @@ class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, IMainL
             return (
                 <div>
                     <h1>Ensuro</h1>
-                    <h2>{currentPage}</h2>
+                    <h2>{currentPage.name}</h2>
     
                     <div>
                         <Link to="/">Terms</Link>
@@ -81,8 +75,8 @@ class UnconnectedMainLayout extends React.PureComponent<IMainLayoutProps, IMainL
                     <Route path="/your-vehicle" exact component={YourVehicle} />
     
                     <div>
-                        <div>prev</div>
-                        <div onClick={this.onClickNext}>next</div>
+                        {currentPage.prevPageSlug && <Link to={currentPage.prevPageSlug}>prev</Link>}
+                        {currentPage.nextPageSlug && <Link to={currentPage.nextPageSlug}>next</Link>}
                     </div>
     
                     <footer>
@@ -101,12 +95,11 @@ const mapStateToProps = (state: IAppState) => ({
 
 // Todo: Type setLand and setPageData properly
 const mapDispatchToProps = (dispatch: Function) => ({
-    dispatchSetCurentPage: (pageName:string) => dispatch(setCurrentPage(pageName)),
     dispatchSetLang: (lang: any) => dispatch(setLang(lang)),
     dispatchSetPageData: (pageData: any) => dispatch(setPageData(pageData))
 })
 
-export default connect(
+export default connect<IPropsFromState, IPropsWithDispatch, {}, IAppState>(
     mapStateToProps,
     mapDispatchToProps
-)(UnconnectedMainLayout);
+)(MainLayout);

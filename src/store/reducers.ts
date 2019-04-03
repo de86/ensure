@@ -1,9 +1,9 @@
 import { actionNames } from './actions';
-import { IAppState } from '../shared/types';
+import { IAppState, IPage } from '../shared/types';
 
 // decide page number or names. maybe create enum
 const initialState: IAppState = {
-    currentPage: 'terms',
+    currentPage: {} as IPage,
     questionAnswers: {},
     lang: {},
     pageData: {}

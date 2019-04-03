@@ -1,4 +1,4 @@
-import { IQuestionAnswer } from '../shared/types';
+import { IQuestionAnswer, IPage } from '../shared/types';
 
 export const actionNames = {
     SET_CURRENT_PAGE: 'SET_CURRENT_PAGE',
@@ -14,7 +14,7 @@ interface IAction<T> {
 
 
 // change type of payload to whatever type we decide for page
-export const setCurrentPage = (payload: string): IAction<string> => ({
+export const setCurrentPage = (payload: IPage): IAction<IPage> => ({
     type: actionNames.SET_CURRENT_PAGE,
     payload
 });

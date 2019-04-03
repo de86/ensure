@@ -1,8 +1,8 @@
 export interface IAppState {
-    currentPage: string;
+    currentPage: IPage;
     questionAnswers: Record<string, string>;
     lang: any; // Todo: type properly
-    pageData: any; // Todo: type properly
+    pageData: Record<string, IPage>; // Todo: type properly
 }
 
 export interface IQuestionTranslations {
@@ -19,4 +19,11 @@ export interface IQuestion {
 export interface IQuestionAnswer {
     id: string,
     answer: string
+}
+
+export interface IPage {
+    name: string,
+    questionIds: number[],
+    nextPageSlug: string,
+    prevPageSlug: string
 }
