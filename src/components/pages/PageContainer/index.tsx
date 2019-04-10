@@ -2,12 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { IAppState, IPage } from '../../../shared/types';
-import { QuestionIds } from '../../../../data/questionSets/car';
-
-import { translate } from '../../../helpers/translations';
 import { setCurrentPage } from '../../../store/actions';
-
-import Question from '../../componentLib/Question';
 
 
 
@@ -21,27 +16,25 @@ interface IPropsFromState {
 }
 
 interface IOwnProps {
-    setNavigationUrls: Function
-};
+    children: any;
+}
 
-interface ITermsProps extends IPropsFromState, IPropsWithDispatch, IOwnProps {}
+type ITermsProps = IPropsFromState & IPropsWithDispatch & IOwnProps;
 
 
 
-class Terms extends React.PureComponent<ITermsProps, {}> {
-
-    componentDidMount (): void {
-        this.props.dispatchSetCurrentPage(this.props.pageData.terms)
-    }
+class PageContainer extends React.PureComponent<ITermsProps, {}> {
 
     render (): React.ReactNode {
-        return (
-            <React.Fragment>
-                <h2>{translate('terms_conditions.page_header')}</h2>
-                <div dangerouslySetInnerHTML={{__html: translate('terms_conditions.intro_text')}} />
-                <Question questionId={QuestionIds.Confirm} />
-            </React.Fragment>
-        );
+        console.log(this.props);
+
+        const {children, currentPage, pageData, dispatchSetCurrentPage} = this.props;
+
+        return  React.createElement(children, {
+            currentPage,
+            pageData,
+            dispatchSetCurrentPage
+        });
     }
 }
 
@@ -59,4 +52,4 @@ const mapStateToProps = (state: IAppState) => ({
 export default connect<IPropsFromState, IPropsWithDispatch, IOwnProps, IAppState>(
     mapStateToProps,
     mapDispatchToProps
-)(Terms);
+)(PageContainer);

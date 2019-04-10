@@ -12,6 +12,14 @@ import TextField from '../TextField';
 
 
 
+// Typed as any a TSLint unable to correctly infer type (??)
+const questions: any = {
+    [QuestionTypes.CHECKBOX]: Checkbox,
+    [QuestionTypes.TEXT_FIELD]: TextField
+}
+
+
+
 interface IPropsFromState {
     question: IQuestion;
 }
@@ -25,12 +33,6 @@ interface IOwnProps {
 }
 
 type IQuestionProps = IPropsFromState & IPropsWithDispatch & IOwnProps
-
-// Typed as any a TSLint unable to correctly infer type (??)
-const questions: any = {
-    [QuestionTypes.CHECKBOX]: Checkbox,
-    [QuestionTypes.TEXT_FIELD]: TextField
-}
 
 
 

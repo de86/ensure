@@ -10,9 +10,9 @@ import { IAppState, IPage } from '../../shared/types';
 import api from '../../services/api';
 import { setLang, setPageData, getAllQuestions } from '../../store/actions';
 
-import Terms from '../pageContent/Terms';
-import About from '../pageContent/About';
-import YourVehicle from '../pageContent/YourVehicle';
+import Terms from '../pages/Terms';
+import About from '../pages/About';
+import YourVehicle from '../pages/YourVehicle';
 
 interface IPropsFromState {
     currentPage: IPage
