@@ -9,6 +9,10 @@
         "intro_text": "<p>You can get a quote online now. Before you do, please read the information below.</p><p>This information is important because it contains:</p><ul><li>assumptions that will form the basis of any insurance policy you are offered, and</li><li>information about how we will use your personal information.</li></ul>"
     },
 
+    "about_you": {
+        "page_header": "About you"
+    },
+
     "questions": {
         "confirm": {
             "text": "I confirm that I've read the important information and agree with how my personal information will be used.",

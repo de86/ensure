@@ -1,30 +1,37 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { setQuestionAnswer } from '../../../store/actions';
-import { IQuestion, IQuestionAnswer } from  '../../../shared/types';
+import { IQuestion, IAppState } from  '../../../shared/types';
+import { QuestionTypes } from '../../../shared/enums';
+import { QuestionIds } from '../../../../data/questionSets/car';
 
-import { translate } from '../../../helpers/translations';
+import { setQuestionAnswer } from '../../../store/actions';
 
 import Checkbox from '../Checkbox';
+import TextField from '../TextField';
 
 
-export enum QuestionTypes {
-    Checkbox
+
+interface IPropsFromState {
+    question: IQuestion;
 }
 
 interface IPropsWithDispatch {
     dispatchSetQuestionAnswer: Function;
 }
 
-interface IQuestionProps extends IPropsWithDispatch {
-    question: IQuestion;
-    questionType: QuestionTypes;
+interface IOwnProps {
+    questionId: QuestionIds;
 }
 
-const questions = {
-    [QuestionTypes.Checkbox]: Checkbox
+type IQuestionProps = IPropsFromState & IPropsWithDispatch & IOwnProps
+
+// Typed as any a TSLint unable to correctly infer type (??)
+const questions: any = {
+    [QuestionTypes.CHECKBOX]: Checkbox,
+    [QuestionTypes.TEXT_FIELD]: TextField
 }
+
 
 
 class UnconnectedQuestion extends React.PureComponent<IQuestionProps, {}> {
@@ -32,28 +39,32 @@ class UnconnectedQuestion extends React.PureComponent<IQuestionProps, {}> {
 
     dispatchSetQuestionAnswer = (e: React.ChangeEvent<HTMLInputElement>): void => this.props.dispatchSetQuestionAnswer({
         id: this.props.question.id,
-        answer: this.inputRef.current.checked
-    });
-
-    questionComponent = React.createElement(questions[this.props.questionType], {
-        id: this.props.question.id,
-        name: this.props.question.name,
-        labelText: translate(this.props.question.translations.text),
-        inputRef: this.inputRef,
-        dispatchSetQuestionAnswer: this.dispatchSetQuestionAnswer
+        answer: this.inputRef.current.value
     });
 
     render (): React.ReactNode {
-        return this.questionComponent;
+        const {question} = this.props;
+
+        return React.createElement(questions[question.type], {
+            question,
+            inputRef: this.inputRef,
+            dispatchSetQuestionAnswer: this.dispatchSetQuestionAnswer
+        });
     }
 }
 
 
+
+const mapStateToProps = (state: IAppState, ownProps: IOwnProps) => ({
+    question: state.questions[ownProps.questionId]
+})
+
 const mapDispatchToProps = (dispatch: Function) => ({
-    dispatchSetQuestionAnswer: (questionAnswer: IQuestionAnswer) => dispatch(setQuestionAnswer(questionAnswer))
+    dispatchSetQuestionAnswer: (questionAnswer: string) => dispatch(setQuestionAnswer(questionAnswer))
 });
 
-export default connect(
-    null,
+export default connect<IPropsFromState, IPropsWithDispatch, IOwnProps, IAppState>(
+    mapStateToProps,
     mapDispatchToProps
 )(UnconnectedQuestion);
+

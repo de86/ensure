@@ -1,11 +1,11 @@
 import { actionNames } from './actions';
-import { IAppState, IPage } from '../shared/types';
+import { IAppState, IPage, ILang, IQuestions } from '../shared/types';
 
 // decide page number or names. maybe create enum
 const initialState: IAppState = {
     currentPage: {} as IPage,
-    questionAnswers: {},
-    lang: {},
+    questions: {} as IQuestions,
+    lang: {} as ILang,
     pageData: {}
 }
 
@@ -18,12 +18,21 @@ export default function rootReducer (state: IAppState = initialState, action: an
                 currentPage: action.payload
             }
 
+        case actionNames.GET_ALL_QUESTIONS:
+            return {
+                ...state,
+                questions: action.payload
+            }
+
         case actionNames.SET_QUESTION_ANSWER:
             return {
                 ...state,
-                questionAnswers: {
-                    ...state.questionAnswers,
-                    [action.payload.id]: action.payload.answer
+                questions: {
+                    ...state.questions,
+                    [action.payload.id]: {
+                        ...state.questions[action.payload.id],
+                        answer: action.payload.answer
+                    }
                 }
             }
 

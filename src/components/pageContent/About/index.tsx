@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { IAppState, IPage } from '../../../shared/types';
 import { QuestionIds } from '../../../../data/questionSets/car';
+import { IAppState, IPage } from '../../../shared/types';
 
 import { translate } from '../../../helpers/translations';
 import { setCurrentPage } from '../../../store/actions';
@@ -31,15 +31,14 @@ interface ITermsProps extends IPropsFromState, IPropsWithDispatch, IOwnProps {}
 class Terms extends React.PureComponent<ITermsProps, {}> {
 
     componentDidMount (): void {
-        this.props.dispatchSetCurrentPage(this.props.pageData.terms)
+        this.props.dispatchSetCurrentPage(this.props.pageData.about)
     }
 
     render (): React.ReactNode {
         return (
             <React.Fragment>
-                <h2>{translate('terms_conditions.page_header')}</h2>
-                <div dangerouslySetInnerHTML={{__html: translate('terms_conditions.intro_text')}} />
-                <Question questionId={QuestionIds.Confirm} />
+                <h2>{translate('about_you.page_header')}</h2>
+                <Question questionId={QuestionIds.FirstName}/>
             </React.Fragment>
         );
     }

@@ -1,8 +1,11 @@
 import { QuestionIds } from '../../questionSets/car';
+import { IPage } from '../../../src/shared/types';
 
-export default {
+const termsPage: IPage = {
     name: 'terms',
     questionIds: [QuestionIds.Confirm],
     nextPageSlug: 'about-you',
     prevPageSlug: null
 };
+
+export default termsPage;

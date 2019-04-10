@@ -3,14 +3,15 @@ import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import pageData from '../../../data/pages/car';
+import questions from '../../../data/questionSets/car';
 
 import { IAppState, IPage } from '../../shared/types';
 
 import api from '../../services/api';
-import { setLang, setPageData } from '../../store/actions';
+import { setLang, setPageData, getAllQuestions } from '../../store/actions';
 
 import Terms from '../pageContent/Terms';
-import AboutYou from '../pageContent/AboutYou';
+import About from '../pageContent/About';
 import YourVehicle from '../pageContent/YourVehicle';
 
 interface IPropsFromState {
@@ -20,6 +21,7 @@ interface IPropsFromState {
 interface IPropsWithDispatch {
     dispatchSetLang: Function
     dispatchSetPageData: Function
+    dispatchGetAllQuestions: Function
 }
 
 interface IMainLayoutProps extends IPropsFromState, IPropsWithDispatch {}
@@ -38,13 +40,14 @@ class MainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState>
     fetchInitialAppData = () => {
         this.setState({isLoading: true});
 
-        this.props.dispatchSetPageData(pageData);
-
         api.getLang('en')
            .then(lang => {
                this.props.dispatchSetLang(lang);
                this.setState({isLoading: false});
            });
+           
+        this.props.dispatchSetPageData(pageData);
+        this.props.dispatchGetAllQuestions(questions);
     }
 
     componentDidMount (): void {
@@ -52,7 +55,6 @@ class MainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState>
     }
 
     render (): React.ReactNode {
-        console.log('MainLayout: Render');
         const {currentPage} = this.props;
         const {isLoading} = this.state;
 
@@ -71,7 +73,7 @@ class MainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState>
                     </div>
     
                     <Route path="/" exact component={Terms} />
-                    <Route path="/about-you" exact component={AboutYou} />
+                    <Route path="/about-you" exact component={About} />
                     <Route path="/your-vehicle" exact component={YourVehicle} />
     
                     <div>
@@ -96,7 +98,8 @@ const mapStateToProps = (state: IAppState) => ({
 // Todo: Type setLand and setPageData properly
 const mapDispatchToProps = (dispatch: Function) => ({
     dispatchSetLang: (lang: any) => dispatch(setLang(lang)),
-    dispatchSetPageData: (pageData: any) => dispatch(setPageData(pageData))
+    dispatchSetPageData: (pageData: any) => dispatch(setPageData(pageData)),
+    dispatchGetAllQuestions: (questions: any) => dispatch(getAllQuestions(questions))
 })
 
 export default connect<IPropsFromState, IPropsWithDispatch, {}, IAppState>(
