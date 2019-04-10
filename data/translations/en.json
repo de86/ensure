@@ -25,6 +25,10 @@
         "last_name": {
             "text": "What is your last name?",
             "hint": "Please enter your last name."
+        },
+        "Dob": {
+            "text": "What is your date of birth?",
+            "hint": "Please enter you date of birth in the format DD-MM-YYY"
         }
     }
 }

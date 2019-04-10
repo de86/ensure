@@ -4,7 +4,8 @@ import { translate } from '../../../helpers/translations';
 import { IQuestionProps } from '../../../shared/types';
 
 
-export default ({question, dispatchSetQuestionAnswer, inputRef}: IQuestionProps) => {
+
+ const TextField = ({question, onChangeHandler, inputRef}: IQuestionProps) => {
     const {name, id, translations} = question;
 
     return (
@@ -18,10 +19,14 @@ export default ({question, dispatchSetQuestionAnswer, inputRef}: IQuestionProps)
             <input
                 type="text"
                 name={name}
-                onChange={dispatchSetQuestionAnswer}
+                onChange={onChangeHandler}
                 ref={inputRef}
                 value={question.answer}
             />
         </div>
     )
 }
+
+
+
+export default TextField;

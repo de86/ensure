@@ -53,5 +53,5 @@ export interface IPage {
 export interface IQuestionProps {
     question: IQuestion;
     inputRef: React.RefObject<HTMLInputElement>;
-    dispatchSetQuestionAnswer: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

@@ -12,6 +12,10 @@
                     "page_header": "Get a car insurance quote",
                     "intro_text": "<p>You can get a quote online now. Before you do, please read the information below.</p><p>This information is important because it contains:</p><ul><li>assumptions that will form the basis of any insurance policy you are offered, and</li><li>information about how we will use your personal information.</li></ul>"
                 },
+
+                "about_you": {
+                    "page_header": "About you"
+                },
             
                 "questions": {
                     "confirm": {
@@ -25,6 +29,10 @@
                     "last_name": {
                         "text": "What is your last name?",
                         "hint": "Please enter your last name."
+                    },
+                    "Dob": {
+                        "text": "What is your date of birth?",
+                        "hint": "Please enter you date of birth in the format DD-MM-YYY"
                     }
                 }
             }
@@ -41,6 +49,10 @@
                     "page_header": "Get a car insurance quote",
                     "intro_text": "<p>You can get a quote online now. Before you do, please read the information below.</p><p>This information is important because it contains:</p><ul><li>assumptions that will form the basis of any insurance policy you are offered, and</li><li>information about how we will use your personal information.</li></ul>"
                 },
+
+                "about_you": {
+                    "page_header": "About you"
+                },
             
                 "questions": {
                     "confirm": {
@@ -54,6 +66,10 @@
                     "last_name": {
                         "text": "What is your last name?",
                         "hint": "Please enter your last name."
+                    },
+                    "Dob": {
+                        "text": "What is your date of birth?",
+                        "hint": "Please enter you date of birth in the format DD-MM-YYY"
                     }
                 }
             }

@@ -42,8 +42,10 @@ export default {
         id: 3,
         type: QuestionTypes.TEXT_FIELD,
         name: "dob",
-        text: "What is your date of birth?",
-        hint: "Please enter your date of birth in the format DD MM YYYY."
+        translations: {
+            text: "questions.Dob.text",
+            hint: "questions.Dob.hint"
+        }
     },
     [QuestionIds.VehicleMake]: {
         id: 4,

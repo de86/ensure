@@ -26,8 +26,6 @@ type ITermsProps = IPropsFromState & IPropsWithDispatch & IOwnProps;
 class PageContainer extends React.PureComponent<ITermsProps, {}> {
 
     render (): React.ReactNode {
-        console.log(this.props);
-
         const {children, currentPage, pageData, dispatchSetCurrentPage} = this.props;
 
         return  React.createElement(children, {

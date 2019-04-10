@@ -9,7 +9,7 @@ const aboutPage: IPage = {
         QuestionIds.Dob
     ],
     nextPageSlug: 'your-vehicle',
-    prevPageSlug: 'about-you'
+    prevPageSlug: '/'
 };
 
 export default aboutPage;

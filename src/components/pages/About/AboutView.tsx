@@ -29,6 +29,8 @@ export default class AboutView extends React.PureComponent<ITermsProps, {}> {
             <React.Fragment>
                 <h2>{translate('about_you.page_header')}</h2>
                 <Question questionId={QuestionIds.FirstName}/>
+                <Question questionId={QuestionIds.LastName}/>
+                <Question questionId={QuestionIds.Dob}/>
             </React.Fragment>
         );
     }

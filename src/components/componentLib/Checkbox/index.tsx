@@ -4,7 +4,7 @@ import { translate } from '../../../helpers/translations';
 import { IQuestionProps } from '../../../shared/types';
 
 
-export default ({question, dispatchSetQuestionAnswer, inputRef}: IQuestionProps): React.ReactNode => {
+ const Checkbox = ({question, onChangeHandler, inputRef}: IQuestionProps): React.ReactNode => {
     const {name, id ,translations} = question;
 
     return (
@@ -14,7 +14,7 @@ export default ({question, dispatchSetQuestionAnswer, inputRef}: IQuestionProps)
                 data-id={`checkbox.${name}.${id.toString()}`}
                 id={name}
                 name={name}
-                onChange={dispatchSetQuestionAnswer}
+                onChange={onChangeHandler}
                 ref={inputRef}
             />
             <label
@@ -25,5 +25,6 @@ export default ({question, dispatchSetQuestionAnswer, inputRef}: IQuestionProps)
             </label>
         </div>
     )
-}
-    
+};
+
+export default Checkbox;

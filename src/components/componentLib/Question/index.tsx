@@ -34,15 +34,29 @@ interface IOwnProps {
 
 type IQuestionProps = IPropsFromState & IPropsWithDispatch & IOwnProps
 
+interface IQuestionState {
+    value: string
+}
 
 
-class UnconnectedQuestion extends React.PureComponent<IQuestionProps, {}> {
+class UnconnectedQuestion extends React.PureComponent<IQuestionProps, IQuestionState> {
+    state: IQuestionState = {
+        value: ''
+    }
+
     inputRef = React.createRef<HTMLInputElement>();
 
-    dispatchSetQuestionAnswer = (e: React.ChangeEvent<HTMLInputElement>): void => this.props.dispatchSetQuestionAnswer({
+    dispatchSetQuestionAnswer = (value: string): void => this.props.dispatchSetQuestionAnswer({
         id: this.props.question.id,
-        answer: this.inputRef.current.value
+        answer: value
     });
+
+    onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {value} = e.target;
+
+        this.setState({value})
+        this.dispatchSetQuestionAnswer(value)
+    }
 
     render (): React.ReactNode {
         const {question} = this.props;
@@ -50,7 +64,7 @@ class UnconnectedQuestion extends React.PureComponent<IQuestionProps, {}> {
         return React.createElement(questions[question.type], {
             question,
             inputRef: this.inputRef,
-            dispatchSetQuestionAnswer: this.dispatchSetQuestionAnswer
+            onChangeHandler: this.onChangeHandler
         });
     }
 }
