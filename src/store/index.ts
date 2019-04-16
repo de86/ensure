@@ -1,10 +1,12 @@
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+
 import rootReducer from './reducers';
 
 const store = createStore(
     rootReducer,
     // Connects Redux Dev Tools to app store 
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()    
+    applyMiddleware(thunk)
 );
 
 export default store;

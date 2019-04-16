@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import pageData from '../../../data/pages/car';
 import questions from '../../../data/questionSets/car';
 
-import { IAppState, IPage } from '../../shared/types';
+import { IAppState, ILang, IPage } from '../../shared/types';
 
-import api from '../../services/api';
 import { setLang, setPageData, getAllQuestions } from '../../store/actions';
 
 import Terms from '../pages/Terms';
@@ -38,20 +37,18 @@ class MainLayout extends React.PureComponent<IMainLayoutProps, IMainLayoutState>
     }
 
     fetchInitialAppData = () => {
-        this.setState({isLoading: true});
-
-        api.getLang('en')
-           .then(lang => {
-               this.props.dispatchSetLang(lang);
-               this.setState({isLoading: false});
-           });
-           
-        this.props.dispatchSetPageData(pageData);
-        this.props.dispatchGetAllQuestions(questions);
+        return Promise.all([
+            this.props.dispatchSetLang('en'),
+            this.props.dispatchSetPageData(pageData),
+            this.props.dispatchGetAllQuestions(questions)
+        ]);
     }
 
     componentDidMount (): void {
-        this.fetchInitialAppData();
+        this.setState({isLoading: true});
+
+        this.fetchInitialAppData()
+            .then(() => this.setState({isLoading: false}));
     }
 
     render (): React.ReactNode {
@@ -95,9 +92,9 @@ const mapStateToProps = (state: IAppState) => ({
     currentPage: state.currentPage
 })
 
-// Todo: Type setLand and setPageData properly
+// Todo: Type things properly here
 const mapDispatchToProps = (dispatch: Function) => ({
-    dispatchSetLang: (lang: any) => dispatch(setLang(lang)),
+    dispatchSetLang: (locale: string) => dispatch(setLang(locale)),
     dispatchSetPageData: (pageData: any) => dispatch(setPageData(pageData)),
     dispatchGetAllQuestions: (questions: any) => dispatch(getAllQuestions(questions))
 })

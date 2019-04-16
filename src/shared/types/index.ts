@@ -8,23 +8,19 @@ export interface IAppState {
 }
 
 
-
 export interface ILang {
     locale: string; // Maybe make this an enum for available languages
     translations: Record<string, ITranslations>;
 }
 
 
-
 type ITranslations = Record<string, string>
-
 
 
 export interface IQuestionTranslations {
     text: string;
     hint: string;
 }
-
 
 
 export interface IQuestion {
@@ -36,9 +32,7 @@ export interface IQuestion {
 }
 
 
-
 export type IQuestions = Record<number, IQuestion>
-
 
 
 export interface IPage {
@@ -47,7 +41,6 @@ export interface IPage {
     nextPageSlug: string;
     prevPageSlug: string;
 }
-
 
 
 export interface IQuestionProps {

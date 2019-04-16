@@ -1,5 +1,8 @@
-import { IPage, IQuestion } from '../shared/types';
+import { IPage, IQuestion, ILang } from '../shared/types';
 import { QuestionIds } from '../../data/questionSets/car';
+import { Dispatch } from 'redux';
+
+import api from '../services/api';
 
 export const actionNames = {
     SET_CURRENT_PAGE: 'SET_CURRENT_PAGE',
@@ -15,7 +18,6 @@ interface IAction<T> {
 };
 
 
-// change type of payload to whatever type we decide for page
 export const setCurrentPage = (payload: IPage): IAction<IPage> => ({
     type: actionNames.SET_CURRENT_PAGE,
     payload
@@ -34,11 +36,20 @@ export const setQuestionAnswer = (payload: string): IAction<string> => ({
 })
 
 
-// Todo: Type properly
-export const setLang = (payload: any) => ({
+
+const setLangAction = (payload: ILang): IAction<ILang> => ({
     type: actionNames.SET_LANG,
     payload
 })
+
+export function setLang (locale: string) {
+    return (dispatch: Dispatch) => 
+        api.getLang(locale)
+            .then(
+                (lang) => dispatch(setLangAction(lang)),
+                error => console.log(error)
+            )
+}
 
 
 // Todo: Type properly

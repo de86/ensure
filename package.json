@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open",
     "watchDb": "node data/mockApi/buildDB.js",
-    "jsonServer": "json-server --watch data/mockApi/db.json --routes data/mockApi/routes.json" ,
+    "jsonServer": "json-server --watch data/mockApi/db.json --routes data/mockApi/routes.json",
     "serve": "concurrently \"yarn watchDb\" \"yarn jsonServer\"",
     "test": "jest",
     "snap": "jest --updateSnapshot"
@@ -18,7 +18,8 @@
     "react-dom": "^16.8.5",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
